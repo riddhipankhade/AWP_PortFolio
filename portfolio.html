@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Riddhi Pankhade | Portfolio</title>
+  <style>
+    /* --- Global Styles --- */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f6f9;
+      color: #333;
+      scroll-behavior: smooth;
+      transition: background 0.3s, color 0.3s;
+    }
+    a { text-decoration: none; color: inherit; }
+
+    /* --- Dark Mode --- */
+    body.dark { background: #121212; color: #eee; }
+    body.dark header { background: linear-gradient(135deg, #1a1a1a, #333); }
+    body.dark .about,
+    body.dark .skill-card,
+    body.dark .project-card { background: #1e1e1e; color: #ddd; }
+    body.dark footer { background: #111; color: #aaa; }
+    body.dark .links a { border-color: #eee; color: #eee; }
+
+    /* --- Header --- */
+    header {
+      background: linear-gradient(135deg, #0073e6, #4facfe);
+      color: white;
+      text-align: center;
+      padding: 3rem 1rem;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    header h1 { font-size: 2.5rem; }
+    header p { font-size: 1.2rem; margin-top: 0.5rem; height: 30px; }
+
+    /* --- Typing Animation --- */
+    .typing::after {
+      content: "|";
+      animation: blink 0.7s infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* --- Section --- */
+    section {
+      max-width: 1100px;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.8s ease;
+    }
+    section.visible { opacity: 1; transform: translateY(0); }
+    h2 {
+      font-size: 1.8rem;
+      color: #0073e6;
+      border-left: 5px solid #0073e6;
+      padding-left: 10px;
+      margin-bottom: 1.5rem;
+    }
+
+    /* --- About --- */
+    .about {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      line-height: 1.7;
+    }
+
+    /* --- Skills --- */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.2rem;
+    }
+    .skill-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease, background 0.3s ease;
+      cursor: pointer;
+    }
+    .skill-card:hover { transform: translateY(-5px) scale(1.05); background: #f0f8ff; }
+
+    /* --- Project Filter --- */
+    .filter-buttons {
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .filter-buttons button {
+      margin: 5px;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 6px;
+      background: #0073e6;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .filter-buttons button:hover { background: #005bb5; }
+    .filter-buttons button.active { background: #333; }
+
+    /* --- Projects --- */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .project-card:hover { transform: translateY(-7px) scale(1.03); box-shadow: 0 6px 16px rgba(0,0,0,0.15); }
+    .project-card a {
+      display: inline-block; margin-top: 0.8rem; color: #0073e6; font-weight: bold;
+    }
+
+    /* --- Connect --- */
+    .links a {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      border: 2px solid #0073e6;
+      border-radius: 8px;
+      font-weight: bold;
+      color: #0073e6;
+      transition: all 0.3s ease;
+    }
+    .links a:hover { background: #0073e6; color: white; }
+
+    /* --- Footer --- */
+    footer { text-align: center; padding: 1.5rem; background: #222; color: #ddd; margin-top: 3rem; }
+
+    /* --- Back-to-Top --- */
+    #backToTop {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: #0073e6;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      padding: 12px 16px;
+      font-size: 18px;
+      cursor: pointer;
+      display: none;
+      transition: background 0.3s;
+    }
+    #backToTop:hover { background: #005bb5; }
+
+    /* --- Dark Mode Toggle --- */
+    #themeToggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 10px;
+      border: none;
+      border-radius: 50%;
+      background: #0073e6;
+      color: white;
+      cursor: pointer;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Riddhi Pankhade</h1>
+    <p id="tagline" class="typing"></p>
+  </header>
+
+  <section id="about">
+    <h2>About Me</h2>
+    <div class="about">
+      <p>
+        I am a 3rd-year engineering student passionate about Artificial Intelligence, 
+        Machine Learning, and Data Structures & Algorithms. I love building AI-powered solutions, 
+        working on impactful projects, and improving my problem-solving skills. My journey blends 
+        strong programming in Java and Python with hands-on research and real-world projects. 
+        Currently, I am exploring advanced ML concepts, backend development, and data science.
+      </p>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card"><h3>Programming</h3><p>Java, Python</p></div>
+      <div class="skill-card"><h3>Core CS</h3><p>Data Structures & Algorithms (DSA)</p></div>
+      <div class="skill-card"><h3>Data Science & ML</h3><p>Machine Learning, Data Science, Pandas</p></div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="filter-buttons">
+      <button class="active" onclick="filterProjects('all')">All</button>
+      <button onclick="filterProjects('ml')">ML/AI</button>
+      <button onclick="filterProjects('web')">Web</button>
+    </div>
+    <div class="projects-grid">
+      <div class="project-card ml">
+        <h3>PCOS Detection Model</h3>
+        <p>AI-powered detection system using YOLO and medical imaging datasets.</p>
+        <a href="https://github.com/riddhipankhade/PCOS-Detection-model" target="_blank">View Project →</a>
+      </div>
+      <div class="project-card web">
+        <h3>E-Commerce Website</h3>
+        <p>A full-stack web application with product management and user-friendly UI.</p>
+        <a href="https://github.com/riddhipankhade/E-commerce-Website" target="_blank">View Project →</a>
+      </div>
+      <div class="project-card web">
+        <h3>Metaparks</h3>
+        <p>A creative platform integrating modern web features and interactive design.</p>
+        <a href="https://github.com/riddhipankhade/MetaParks" target="_blank">View Project →</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="connect">
+    <h2>Connect</h2>
+    <div class="links">
+      <a href="https://www.linkedin.com/in/ridpankhade/" target="_blank">LinkedIn</a>
+      <a href="https://github.com/riddhipankhade" target="_blank">GitHub</a>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Riddhi Pankhade | All Rights Reserved</p>
+  </footer>
+
+  <!-- Back to Top & Theme Toggle -->
+  <button id="backToTop">↑</button>
+  <button id="themeToggle">🌙</button>
+
+  <script>
+    // Reveal on scroll
+    const sections = document.querySelectorAll("section");
+    const revealOnScroll = () => {
+      sections.forEach(section => {
+        const rect = section.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 100) section.classList.add("visible");
+      });
+    };
+    window.addEventListener("scroll", revealOnScroll);
+    window.addEventListener("load", revealOnScroll);
+
+    // Typing animation
+    const tagline = document.getElementById("tagline");
+    const texts = ["Aspiring AI/ML Engineer", "Java & Python Developer", "Problem Solver"];
+    let i = 0, j = 0, currentText = "", isDeleting = false;
+    function type() {
+      currentText = texts[i];
+      tagline.textContent = isDeleting
+        ? currentText.substring(0, j--)
+        : currentText.substring(0, j++);
+      if (!isDeleting && j === currentText.length + 1) {
+        isDeleting = true; setTimeout(type, 1000);
+      } else if (isDeleting && j === 0) {
+        isDeleting = false; i = (i + 1) % texts.length;
+        setTimeout(type, 300);
+      } else {
+        setTimeout(type, isDeleting ? 60 : 120);
+      }
+    }
+    type();
+
+    // Back to top button
+    const backToTop = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => {
+      backToTop.style.display = window.scrollY > 300 ? "block" : "none";
+    });
+    backToTop.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+    // Dark mode toggle
+    const themeToggle = document.getElementById("themeToggle");
+    themeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+      themeToggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
+    });
+
+    // Project filter
+    function filterProjects(category) {
+      const projects = document.querySelectorAll(".project-card");
+      const buttons = document.querySelectorAll(".filter-buttons button");
+      buttons.forEach(btn => btn.classList.remove("active"));
+      event.target.classList.add("active");
+      projects.forEach(project => {
+        if (category === "all" || project.classList.contains(category)) {
+          project.style.display = "block";
+        } else {
+          project.style.display = "none";
+        }
+      });
+    }
+  </script>
+</body>
+</html>
